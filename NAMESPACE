@@ -1,0 +1,2 @@
+export(aode)
+S3method(predict,AODE)

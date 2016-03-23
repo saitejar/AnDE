@@ -1,0 +1,104 @@
+Using this package
+
+Two Simple Steps:
+
+1. Build the model on training data
+2. Test the model on test data
+
+Step 1:
+
+ The function you need to call is aode.
+ It accepts a lot of parameters.
+
+  aode(train, mestimate = 1, weighted = FALSE,subsumption = FALSE, S = 100)
+
+	train - training data , should be a data frame. AODE works only discretized data. It would be better to discreetize the data frame before passing it to this function.
+			However, aode discretizes the data if not done before hand. It uses an R package called discretization for the purpose. It uses the well known MDL discretization technique.
+			(It might fail sometimes)
+			
+	mestimate(optional) - the constant to be used for m-estimation. This is used for smoothening of probabilities.
+
+	weighted(optional) - TRUE for a weighted aode , FALSE for simple aode.
+
+	subsumption(optional) - TRUE for doing subsumtion resolution , FALSE for ignoring subsumption resolution. 
+
+	S(optional) - subsumtion constant. Default 100. Will be considered only if subsumtion is set TRUE.
+
+  return value : an object of class AODE
+  
+Step 2:
+  predict(object,test)
+  
+    object - object returned by aode function above.
+    
+    test - testing data frame. If the training data was discretized, then the same cut points shall be used to
+           discretize the test data.
+  comments :
+  predict is a generic function. It is generally used in all machine learning packages in the same way.
+  It is therefore compatible and simple to use. 
+
+
+
+
+If interested in this method , here is some information about this algorithm
+
+
+ AODE achieves highly accurate classification by averaging over all of a small space 
+ of alternative naive-Bayes-like models that have weaker (and hence less detrimental) 
+ independence assumptions than naive Bayes. The resulting algorithm is computationally 
+ efficient while delivering highly accurate classification on many learning  tasks. 
+ For more information, see<br/>
+ G. Webb, J. Boughton, Z. Wang (2005). 
+ Not So Naive Bayes: Aggregating One-Dependence Estimators. Machine Learning. 58(1):5-24.
+
+ Further papers are available at<br/> http://www.csse.monash.edu.au/~webb/.
+ Default frequency limit set to 1.
+
+ BibTeX:
+ article{Webb2005,
+ *    author = {G. Webb and J. Boughton and Z. Wang},
+ *    journal = {Machine Learning},
+ *    number = {1},
+ *    pages = {5-24},
+ *    title = {Not So Naive Bayes: Aggregating One-Dependence Estimators},
+ *    volume = {58},
+ *    year = {2005}
+ * }
+
+
+
+
+
+
+ *  Specify critical value of specialization-generalization for 
+ *  Subsumption Resolution (default is false).
+ *  Results in lowering bias and increasing variance of classification. 
+ *  Recommended for large training data.
+ *  See: in proceedings{Zheng2006,
+ *    author = {Fei Zheng and Geoffrey I. Webb},
+ *    booktitle = {Proceedings of the Twenty-third International Conference on Machine  Learning (ICML 2006)},
+ *    pages = {1113-1120},
+ *    publisher = {ACM Press},
+ *    title = {Efficient Lazy Elimination for Averaged-One Dependence Estimators},
+ *    year = {2006},
+ *    ISBN = {1-59593-383-2}
+ * }
+
+ * 
+    -W (Optional) 
+ *  Weighted AODE. Uses mutual information between attribute and the class as weight of
+ *  each SPODE (default is false).
+ *  Results in lowering bias and increasing variance of classification.
+ *  Recommended for large training data.
+ *  Can not use weighting for A1DEUpdateable classifier.
+ *  See:  
+ *  in proceedings{Jiang2006,
+ *    author = {L. Jiang and H. Zhang},
+ *    booktitle = {Proceedings of the 9th Biennial Pacific Rim International Conference on Artificial Intelligence, PRICAI 2006},
+ *    pages = {970-974},
+ *    series = {LNAI},
+ *    title = {Weightily Averaged One-Dependence Estimators},
+ *    volume = {4099},
+ *    year = {2006}
+ * }
+
